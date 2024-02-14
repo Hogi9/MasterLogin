@@ -26,9 +26,7 @@ Route::get('/logout',[AuthController::class,'logout']);
 Route::middleware(['auth', 'role:superadmin,guest'])->group(function () {
     Route::get('/dashboard', [DashboardController::class,'index']);
 });
-// Route::middleware(['auth', 'role:superadmin'])->group(function () {
-//     Route::get('/testing', [DashboardController::class,'testing']);
-// });
 
-
-Route::get('/testing',[DashboardController::class,'testing']);
+Route::middleware(['auth', 'role:superadmin'])->group(function () {
+    Route::get('/testing', [DashboardController::class,'testing']);
+});

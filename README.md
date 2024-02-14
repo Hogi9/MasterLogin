@@ -1,68 +1,36 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 # MasterLogin
 Merupakan project laravel yang digunakan untuk multi role login user
+
+# Cara Penggunaan
+    1. lakukan perintah : git clone <repository-url>
+    2. rename project folder 
+    3. arahkan path ke project folder
+    4. lakukan perintah : composer install
+    5. lakukan perintah : cp .env.example .env (Untuk membuat .env)
+    6. Sesuaikan konfigurasi database di folder .env
+    7. lakukan perintah : php artisan key:generate
+    8. lakukan perintah : php artisan migrate --seed
+    9. lakukan perintah : php artisan serve
+    10. Buka url laravel project
+
+# Penjelasan Alur Program
+    1. Perhatikan schema database pada migrasi create_users_table dan create_role_table
+    2. Berdasarkan schema, table role memiliki banyak user dengan foreign key di tabel user adalah role_id
+    3. Pada model user dan role diberikan fungsi untuk mengenali foreign key (fungsi role di tabel user, dan fungsi user di tabel role)
+    ----
+    4. Pada model user, juga terdapat fungsi hasRole yang digunakan untuk pengecekan middleware role name pada route
+    5. Pengecekan dilakukan di middleware CheckRole (App\Http\Middleware\ChekcRole.php)
+    6. Pada route (web.php) terdapat Grup Route dengan middleware auth dan role:superadmin
+    7. Group route ini digunakan supaya user tidak dapat melakukan bypass ke route yang telah terdaftar (akan muncul halaman unauthorized)
+    ----
+    8. Pada project ini juga sudah tersedia login dan register menggunakan route web dan api.
+    9. Project ini juga menggunakan sanctum untuk generate key yang digunakan pada route api.
+    10. Controller yang digunakan untuk route web dan api juga sudah terpisah (Di Folder Api merupakan controller untuk route dari api)
+
+# Penjelasan Middleware
+Middleware merupakan fitur yang berupa class yang telah disediakan laravel untuk mencegah pengguna melakukan bypass pada program yang dibuat. Middleware sendiri berjalan pada saat sebelum request dijalankan.
+
+Sederhananya, Middleware pada Laravel layaknya seperti filter sebagai penghubung antara permintaan HTTP dengan aplikasi Laravel kita yang dapat membantu memeriksa permintaan dan menentukan apa yang harus dilakukan sebelum permintaan tersebut diproses (source : buildwithangga.com).
+
+# Source
+Project ini menggunakan framework laravel dengan template html, css, dan javascript sneat.
